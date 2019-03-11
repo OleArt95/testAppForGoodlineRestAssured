@@ -3,17 +3,18 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
 public class VkTestClass {
 
     @Test
-    public void  getUserInfoWithMethodUsersGet() {
+    public void getUserInfoWithMethodUsersGet() {
         RequestSpecification requestSpecification = RestAssured.given();
 
         requestSpecification.header("Content-Type", String.valueOf(ContentType.JSON));
 
-        requestSpecification.param( "user_ids", "ole_art" );
+        requestSpecification.param("user_ids", "ole_art");
 
         requestSpecification.param("access_token", "b4f2daabf13912c20411dd88eb3ca5fd6b23d8b1fca2c8f003efcc6dcb0d89f2968820eab8a4f099e8746");
         requestSpecification.param("v", "5.52");
@@ -31,8 +32,8 @@ public class VkTestClass {
 
         requestSpecification.header("Content-Type", String.valueOf(ContentType.JSON));
 
-        requestSpecification.param( "user_ids", "ole_art" );
-        requestSpecification.param( "fields", "city, sex" );
+        requestSpecification.param("user_ids", "ole_art");
+        requestSpecification.param("fields", "city, sex");
 
         requestSpecification.param("access_token", "b4f2daabf13912c20411dd88eb3ca5fd6b23d8b1fca2c8f003efcc6dcb0d89f2968820eab8a4f099e8746");
         requestSpecification.param("v", "5.52");
@@ -49,6 +50,64 @@ public class VkTestClass {
         Assert.assertEquals(200, response.statusCode());
     }
 
+    @Ignore
+    @Test
+    public void getInfoWithMethodSearchGetHints() {
+        RequestSpecification requestSpecification = RestAssured.given();
 
+        requestSpecification.header("Content-Type", String.valueOf(ContentType.JSON));
 
+        requestSpecification.param("q", "Типичный Кемерово");
+        requestSpecification.param("limit", "10");
+        requestSpecification.param("search_global", 1);
+
+        requestSpecification.param("access_token", "b4f2daabf13912c20411dd88eb3ca5fd6b23d8b1fca2c8f003efcc6dcb0d89f2968820eab8a4f099e8746");
+        requestSpecification.param("v", "5.92");
+
+        Response response = requestSpecification.get("https://api.vk.com/method/search.getHints");
+
+        System.out.println(response.getBody().asString());
+    }
+
+    @Test
+    public void getInfoWithMethodUsersSearch() {
+        RequestSpecification requestSpecification = RestAssured.given();
+
+        requestSpecification.header("Content-Type", String.valueOf(ContentType.JSON));
+
+        requestSpecification.param("q", "Алексей Леонов");
+        requestSpecification.param("count", "4");
+        requestSpecification.param("hometown", "Кемерово");
+
+        requestSpecification.param("access_token", "b4f2daabf13912c20411dd88eb3ca5fd6b23d8b1fca2c8f003efcc6dcb0d89f2968820eab8a4f099e8746");
+        requestSpecification.param("v", "5.92");
+
+        Response response = requestSpecification.get("https://api.vk.com/method/users.search");
+
+        System.out.println(response.getBody().asString());
+
+        Assert.assertEquals(200, response.statusCode());
+        Assert.assertEquals("Леонов", response.path("response.items[2].last_name"));
+    }
+
+    @Test
+    public void getInfoWithMethodUsersGetFollowers() {
+        RequestSpecification requestSpecification = RestAssured.given();
+
+        requestSpecification.header("Content-Type", String.valueOf(ContentType.JSON));
+
+        requestSpecification.param("user_id", "228270452");
+        requestSpecification.param("count", "2");
+        requestSpecification.param("fields", "first_name, last_name");
+
+        requestSpecification.param("access_token", "b4f2daabf13912c20411dd88eb3ca5fd6b23d8b1fca2c8f003efcc6dcb0d89f2968820eab8a4f099e8746");
+        requestSpecification.param("v", "5.92");
+
+        Response response = requestSpecification.get("https://api.vk.com/method/users.getFollowers");
+
+        System.out.println(response.getBody().asString());
+
+        Assert.assertEquals(200, response.statusCode());
+        Assert.assertEquals("Лазина", response.path("response.items[1].last_name"));
+    }
 }
