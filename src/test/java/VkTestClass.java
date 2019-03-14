@@ -48,6 +48,11 @@ public class VkTestClass {
 
     @Test
     public void getUserInfoWithMethodUserGetWithFields() {
+        String expectedCity = "Кемерово";
+        String expectedFirstName = "Олег";
+        String expectedLastName = "Артюхов";
+        int expectedSex = 2;
+
         RequestSpecification requestSpecification = RestAssured.given();
 
         requestSpecification.param("user_ids", "ole_art");
@@ -58,10 +63,10 @@ public class VkTestClass {
         System.out.println(response.getBody().asString());
         System.out.println(response.path("response[0].city"));
 
-        Assert.assertEquals("Кемерово", response.path("response[0].city.title"));
-        Assert.assertEquals(2, response.path("response[0].sex"));
-        Assert.assertEquals("Олег", response.path("response[0].first_name"));
-        Assert.assertEquals("Артюхов", response.path("response[0].last_name"));
+        Assert.assertEquals(expectedCity, response.path("response[0].city.title"));
+        Assert.assertEquals(expectedSex, response.path("response[0].sex"));
+        Assert.assertEquals(expectedFirstName, response.path("response[0].first_name"));
+        Assert.assertEquals(expectedLastName, response.path("response[0].last_name"));
         Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
     }
 
@@ -81,6 +86,8 @@ public class VkTestClass {
 
     @Test
     public void getInfoWithMethodUsersSearch() {
+        String expectedLastName = "Леонов";
+
         RequestSpecification requestSpecification = RestAssured.given();
 
         requestSpecification.param("q", "Алексей Леонов");
@@ -92,11 +99,13 @@ public class VkTestClass {
         System.out.println(response.getBody().asString());
 
         Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
-        Assert.assertEquals("Леонов", response.path("response.items[2].last_name"));
+        Assert.assertEquals(expectedLastName, response.path("response.items[2].last_name"));
     }
 
     @Test
     public void getInfoWithMethodUsersGetFollowers() {
+        String expectedLastName = "Лазина";
+
         RequestSpecification requestSpecification = RestAssured.given();
 
         requestSpecification.param("user_id", "228270452");
@@ -108,6 +117,6 @@ public class VkTestClass {
         System.out.println(response.getBody().asString());
 
         Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
-        Assert.assertEquals("Лазина", response.path("response.items[1].last_name"));
+        Assert.assertEquals(expectedLastName, response.path("response.items[1].last_name"));
     }
 }
