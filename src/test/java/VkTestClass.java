@@ -22,15 +22,15 @@ public class VkTestClass {
 
     @Before
     public void configuration() {
-    RequestSpecification basicSpecification = new RequestSpecBuilder()
-            .setBaseUri(URL_API_VK_COM)
-            .setBasePath(BASE_PATH)
-            .setContentType(ContentType.JSON)
-            .addParam("access_token","b4f2daabf13912c20411dd88eb3ca5fd6b23d8b1fca2c8f003efcc6dcb0d89f2968820eab8a4f099e8746")
-            .addParam("v", API_VERSION)
-            .build();
+        RequestSpecification basicSpecification = new RequestSpecBuilder()
+                .setBaseUri(URL_API_VK_COM)
+                .setBasePath(BASE_PATH)
+                .setContentType(ContentType.JSON)
+                .addParam("access_token", "e2aac7c6aacb02ade526337a568564938500686dc204bde26160d054cd0c542fa8060b63134ded7fa88b2")
+                .addParam("v", API_VERSION)
+                .build();
 
-    RestAssured.requestSpecification = basicSpecification;
+        RestAssured.requestSpecification = basicSpecification;
     }
 
     @Test
