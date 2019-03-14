@@ -66,11 +66,11 @@ public class VkTestClass {
         System.out.println(response.getBody().asString());
         System.out.println(response.path("response[0].city"));
 
+        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
         Assert.assertEquals(expectedCity, response.path("response[0].city.title"));
         Assert.assertEquals(expectedSex, response.path("response[0].sex"));
         Assert.assertEquals(expectedFirstName, response.path("response[0].first_name"));
         Assert.assertEquals(expectedLastName, response.path("response[0].last_name"));
-        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
     }
 
     @Ignore
