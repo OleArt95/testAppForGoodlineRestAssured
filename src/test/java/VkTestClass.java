@@ -8,6 +8,8 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+
 public class VkTestClass {
 
     private static final int HTTP_STATUS_OK = 200;
@@ -40,6 +42,10 @@ public class VkTestClass {
         requestSpecification.param("user_ids", "ole_art");
 
         Response response = requestSpecification.get(API_VK_USERS_GET);
+        requestSpecification.get(API_VK_USERS_GET)
+                .then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("UsersMethodGetSchema.json"));
 
         System.out.println(response.getBody().asString());
 
