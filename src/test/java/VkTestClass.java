@@ -8,6 +8,7 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
+import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class VkTestClass {
@@ -37,19 +38,15 @@ public class VkTestClass {
 
     @Test
     public void getUserInfoWithMethodUsersGet() {
-        RequestSpecification requestSpecification = RestAssured.given();
+        given().
+                param("user_ids", "ole_art")
 
-        requestSpecification.param("user_ids", "ole_art");
-
-        Response response = requestSpecification.get(API_VK_USERS_GET);
-        requestSpecification.get(API_VK_USERS_GET)
-                .then()
+                .when().
+                get(API_VK_USERS_GET)
+        .then()
                 .assertThat()
-                .body(matchesJsonSchemaInClasspath("UsersMethodGetSchema.json"));
-
-        System.out.println(response.getBody().asString());
-
-        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
+                .body(matchesJsonSchemaInClasspath("UsersMethodGetSchema.json"))
+                .assertThat().statusCode(HTTP_STATUS_OK);
     }
 
     @Test
@@ -59,7 +56,7 @@ public class VkTestClass {
         String expectedLastName = "Артюхов";
         int expectedSex = 2;
 
-        RequestSpecification requestSpecification = RestAssured.given();
+        RequestSpecification requestSpecification = given();
 
         requestSpecification.param("user_ids", "ole_art");
         requestSpecification.param("fields", "city, sex");
@@ -79,7 +76,7 @@ public class VkTestClass {
     @Ignore
     @Test
     public void getInfoWithMethodSearchGetHints() {
-        RequestSpecification requestSpecification = RestAssured.given();
+        RequestSpecification requestSpecification = given();
 
         requestSpecification.param("q", "Типичный Кемерово");
         requestSpecification.param("limit", "10");
@@ -94,7 +91,7 @@ public class VkTestClass {
     public void getInfoWithMethodUsersSearch() {
         String expectedLastName = "Леонов";
 
-        RequestSpecification requestSpecification = RestAssured.given();
+        RequestSpecification requestSpecification = given();
 
         requestSpecification.param("q", "Алексей Леонов");
         requestSpecification.param("count", "4");
@@ -112,7 +109,7 @@ public class VkTestClass {
     public void getInfoWithMethodUsersGetFollowers() {
         String expectedLastName = "Лазина";
 
-        RequestSpecification requestSpecification = RestAssured.given();
+        RequestSpecification requestSpecification = given();
 
         requestSpecification.param("user_id", "228270452");
         requestSpecification.param("count", "2");
