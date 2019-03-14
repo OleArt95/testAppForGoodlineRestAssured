@@ -15,6 +15,11 @@ public class VkTestClass {
     private static final String BASE_PATH = "/method/";
     private static final String API_VERSION = "5.52";
 
+    private static final String API_VK_USERS_GET = "users.get";
+    private static final String API_VK_SEARCH_GET_HINTS = "search.getHints";
+    private static final String API_VK_USERS_SEARCH = "users.search";
+    private static final String API_VK_USERS_GET_FOLLOWERS = "users.getFollowers";
+
     @Before
     public void configuration() {
     RequestSpecification basicSpecification = new RequestSpecBuilder()
@@ -34,7 +39,7 @@ public class VkTestClass {
 
         requestSpecification.param("user_ids", "ole_art");
 
-        Response response = requestSpecification.get("users.get");
+        Response response = requestSpecification.get(API_VK_USERS_GET);
 
         System.out.println(response.getBody().asString());
 
@@ -48,7 +53,7 @@ public class VkTestClass {
         requestSpecification.param("user_ids", "ole_art");
         requestSpecification.param("fields", "city, sex");
 
-        Response response = requestSpecification.get("users.get");
+        Response response = requestSpecification.get(API_VK_USERS_GET);
 
         System.out.println(response.getBody().asString());
         System.out.println(response.path("response[0].city"));
@@ -69,7 +74,7 @@ public class VkTestClass {
         requestSpecification.param("limit", "10");
         requestSpecification.param("search_global", 1);
 
-        Response response = requestSpecification.get("search.getHints");
+        Response response = requestSpecification.get(API_VK_SEARCH_GET_HINTS);
 
         System.out.println(response.getBody().asString());
     }
@@ -82,7 +87,7 @@ public class VkTestClass {
         requestSpecification.param("count", "4");
         requestSpecification.param("hometown", "Кемерово");
 
-        Response response = requestSpecification.get("users.search");
+        Response response = requestSpecification.get(API_VK_USERS_SEARCH);
 
         System.out.println(response.getBody().asString());
 
@@ -98,7 +103,7 @@ public class VkTestClass {
         requestSpecification.param("count", "2");
         requestSpecification.param("fields", "first_name, last_name");
 
-        Response response = requestSpecification.get("users.getFollowers");
+        Response response = requestSpecification.get(API_VK_USERS_GET_FOLLOWERS);
 
         System.out.println(response.getBody().asString());
 
