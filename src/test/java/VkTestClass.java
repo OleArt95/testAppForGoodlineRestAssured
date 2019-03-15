@@ -56,21 +56,29 @@ public class VkTestClass {
         String expectedLastName = "Артюхов";
         int expectedSex = 2;
 
-        RequestSpecification requestSpecification = given();
-
-        requestSpecification.param("user_ids", "ole_art");
-        requestSpecification.param("fields", "city, sex");
-
-        Response response = requestSpecification.get(API_VK_USERS_GET);
-
-        System.out.println(response.getBody().asString());
-        System.out.println(response.path("response[0].city"));
-
-        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
-        Assert.assertEquals(expectedCity, response.path("response[0].city.title"));
-        Assert.assertEquals(expectedSex, response.path("response[0].sex"));
-        Assert.assertEquals(expectedFirstName, response.path("response[0].first_name"));
-        Assert.assertEquals(expectedLastName, response.path("response[0].last_name"));
+        given().
+                param("user_ids", "ole_art").
+                param("fields", "city, sex").
+        when().
+                get(API_VK_USERS_GET)
+        .then()
+                .assertThat()
+                .body(Users)
+//        RequestSpecification requestSpecification = given();
+//
+//        requestSpecification.param("user_ids", "ole_art");
+//        requestSpecification.param("fields", "city, sex");
+//
+//        Response response = requestSpecification.get(API_VK_USERS_GET);
+//
+//        System.out.println(response.getBody().asString());
+//        System.out.println(response.path("response[0].city"));
+//
+//        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
+//        Assert.assertEquals(expectedCity, response.path("response[0].city.title"));
+//        Assert.assertEquals(expectedSex, response.path("response[0].sex"));
+//        Assert.assertEquals(expectedFirstName, response.path("response[0].first_name"));
+//        Assert.assertEquals(expectedLastName, response.path("response[0].last_name"));
     }
 
     @Ignore

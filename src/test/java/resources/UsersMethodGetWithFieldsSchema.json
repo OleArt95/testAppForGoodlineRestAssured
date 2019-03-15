@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "response": {
+    "type": "array",
+    "properties": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "number"
+        },
+        "first_name": {
+          "type": "string"
+        },
+        "last_name": {
+          "type": "string"
+        },
+        "sex":{
+          "type": "number"
+        },
+        "city":{
+          "type": "object",
+          "properties": {
+            "id": {
+              "type": "number"
+            },
+            "title":{
+              "type": "string"
+            }
+          }
+        }
+
+      }
+    }
+  }
+
+}
