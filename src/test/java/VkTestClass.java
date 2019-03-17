@@ -1,18 +1,14 @@
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
-import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
-
-import static org.hamcrest.Matchers.equalTo;
-
-import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
+import static org.hamcrest.Matchers.equalTo;
 
 public class VkTestClass {
 
@@ -81,9 +77,9 @@ public class VkTestClass {
                 param("q", "Типичный Кемерово").
                 param("limit", 10).
                 param("search_global", 1).
-        when().
+                when().
                 get(API_VK_SEARCH_GET_HINTS)
-        .then().
+                .then().
                 assertThat().statusCode(HTTP_STATUS_OK);
     }
 
@@ -95,9 +91,9 @@ public class VkTestClass {
                 param("q", "Алексей Леонов").
                 param("count", "4").
                 param("hometown", "Кемерово").
-        when().
+                when().
                 get(API_VK_USERS_SEARCH)
-        .then().
+                .then().
                 assertThat().statusCode(HTTP_STATUS_OK).
                 assertThat().body("response.items[2].last_name", equalTo(expectedLastName));
     }
@@ -110,9 +106,9 @@ public class VkTestClass {
                 param("user_id", "228270452").
                 param("count", "2").
                 param("fields", "first_name, last_name").
-        when().
+                when().
                 get(API_VK_USERS_GET_FOLLOWERS)
-        .then().
+                .then().
                 assertThat().statusCode(HTTP_STATUS_OK).
                 assertThat().body("response.items[1].last_name", equalTo(expectedLastName));
     }
