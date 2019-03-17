@@ -92,18 +92,15 @@ public class VkTestClass {
     public void getInfoWithMethodUsersSearch() {
         String expectedLastName = "Леонов";
 
-        RequestSpecification requestSpecification = given();
-
-        requestSpecification.param("q", "Алексей Леонов");
-        requestSpecification.param("count", "4");
-        requestSpecification.param("hometown", "Кемерово");
-
-        Response response = requestSpecification.get(API_VK_USERS_SEARCH);
-
-        System.out.println(response.getBody().asString());
-
-        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
-        Assert.assertEquals(expectedLastName, response.path("response.items[2].last_name"));
+        given().
+                param("q", "Алексей Леонов").
+                param("count", "4").
+                param("hometown", "Кемерово").
+        when().
+                get(API_VK_USERS_SEARCH)
+        .then().
+                assertThat().statusCode(HTTP_STATUS_OK).
+                assertThat().body("response.items[2].last_name", equalTo(expectedLastName));
     }
 
     @Test
