@@ -107,17 +107,14 @@ public class VkTestClass {
     public void getInfoWithMethodUsersGetFollowers() {
         String expectedLastName = "Лазина";
 
-        RequestSpecification requestSpecification = given();
-
-        requestSpecification.param("user_id", "228270452");
-        requestSpecification.param("count", "2");
-        requestSpecification.param("fields", "first_name, last_name");
-
-        Response response = requestSpecification.get(API_VK_USERS_GET_FOLLOWERS);
-
-        System.out.println(response.getBody().asString());
-
-        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
-        Assert.assertEquals(expectedLastName, response.path("response.items[1].last_name"));
+        given().
+                param("user_id", "228270452").
+                param("count", "2").
+                param("fields", "first_name, last_name").
+        when().
+                get(API_VK_USERS_GET_FOLLOWERS)
+        .then().
+                assertThat().statusCode(HTTP_STATUS_OK).
+                assertThat().body("response.items[1].last_name", equalTo(expectedLastName));
     }
 }
