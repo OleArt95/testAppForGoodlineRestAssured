@@ -77,15 +77,14 @@ public class VkTestClass {
     @Ignore
     @Test
     public void getInfoWithMethodSearchGetHints() {
-        RequestSpecification requestSpecification = given();
-
-        requestSpecification.param("q", "Типичный Кемерово");
-        requestSpecification.param("limit", "10");
-        requestSpecification.param("search_global", 1);
-
-        Response response = requestSpecification.get(API_VK_SEARCH_GET_HINTS);
-
-        System.out.println(response.getBody().asString());
+        given().
+                param("q", "Типичный Кемерово").
+                param("limit", 10).
+                param("search_global", 1).
+        when().
+                get(API_VK_SEARCH_GET_HINTS)
+        .then().
+                assertThat().statusCode(HTTP_STATUS_OK);
     }
 
     @Test
