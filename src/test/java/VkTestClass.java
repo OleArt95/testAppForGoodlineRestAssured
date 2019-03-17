@@ -3,6 +3,9 @@ import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+
+import static org.hamcrest.Matchers.equalTo;
+
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -29,7 +32,7 @@ public class VkTestClass {
                 .setBaseUri(URL_API_VK_COM)
                 .setBasePath(BASE_PATH)
                 .setContentType(ContentType.JSON)
-                .addParam("access_token", "e2aac7c6aacb02ade526337a568564938500686dc204bde26160d054cd0c542fa8060b63134ded7fa88b2")
+                .addParam("access_token", "647e0a47b8fdbc94c2a9fd1cc557bd5e9b136eab04bfce2b5fc93456b526b0ecc9f9125c7a95f26414fff")
                 .addParam("v", API_VERSION)
                 .build();
 
@@ -43,7 +46,7 @@ public class VkTestClass {
 
                 .when().
                 get(API_VK_USERS_GET)
-        .then()
+                .then()
                 .assertThat()
                 .body(matchesJsonSchemaInClasspath("UsersMethodGetSchema.json"))
                 .assertThat().statusCode(HTTP_STATUS_OK);
@@ -59,26 +62,16 @@ public class VkTestClass {
         given().
                 param("user_ids", "ole_art").
                 param("fields", "city, sex").
-        when().
+                when().
                 get(API_VK_USERS_GET)
-        .then()
+                .then()
                 .assertThat()
-                .body(Users)
-//        RequestSpecification requestSpecification = given();
-//
-//        requestSpecification.param("user_ids", "ole_art");
-//        requestSpecification.param("fields", "city, sex");
-//
-//        Response response = requestSpecification.get(API_VK_USERS_GET);
-//
-//        System.out.println(response.getBody().asString());
-//        System.out.println(response.path("response[0].city"));
-//
-//        Assert.assertEquals(HTTP_STATUS_OK, response.statusCode());
-//        Assert.assertEquals(expectedCity, response.path("response[0].city.title"));
-//        Assert.assertEquals(expectedSex, response.path("response[0].sex"));
-//        Assert.assertEquals(expectedFirstName, response.path("response[0].first_name"));
-//        Assert.assertEquals(expectedLastName, response.path("response[0].last_name"));
+                .body(matchesJsonSchemaInClasspath("UsersMethodGetWithFieldsSchema.json"))
+                .assertThat().statusCode(HTTP_STATUS_OK)
+                .assertThat().body("response[0].city.title", equalTo(expectedCity))
+                .assertThat().body("response[0].sex", equalTo(expectedSex))
+                .assertThat().body("response[0].first_name", equalTo(expectedFirstName))
+                .assertThat().body("response[0].last_name", equalTo(expectedLastName));
     }
 
     @Ignore

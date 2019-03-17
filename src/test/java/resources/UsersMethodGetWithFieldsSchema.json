@@ -14,23 +14,21 @@
         "last_name": {
           "type": "string"
         },
-        "sex":{
+        "sex": {
           "type": "number"
         },
-        "city":{
+        "city": {
           "type": "object",
           "properties": {
             "id": {
               "type": "number"
             },
-            "title":{
+            "title": {
               "type": "string"
             }
           }
         }
-
       }
     }
   }
-
 }
