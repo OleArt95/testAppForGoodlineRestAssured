@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "response": {
+    "type": "object",
+    "count": {
+      "type": "number"
+    },
+    "items": {
+      "type": "array",
+      "properties": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number"
+          },
+          "first_name": {
+            "type": "string"
+          },
+          "last_name": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  }
+}

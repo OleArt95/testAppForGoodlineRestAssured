@@ -73,14 +73,16 @@ public class VkTestClass {
     @Ignore
     @Test
     public void getInfoWithMethodSearchGetHints() {
-            given().
-                    param("q", "Типичный Кемерово").
-                    param("limit", 10).
-                    param("search_global", 1).
-                    when()
-                    .get(API_VK_SEARCH_GET_HINTS)
-                    .then()
-                    .assertThat().statusCode(HTTP_STATUS_OK);
+        given().
+                param("q", "Типичный Кемерово").
+                param("limit", 10).
+                param("search_global", 1).
+                when()
+                .get(API_VK_SEARCH_GET_HINTS)
+                .then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("SearchMethodGetHints.json"))
+                .assertThat().statusCode(HTTP_STATUS_OK);
     }
 
     @Test
@@ -110,8 +112,10 @@ public class VkTestClass {
                 param("fields", "first_name, last_name").
                 when().
                 get(API_VK_USERS_GET_FOLLOWERS)
-                .then().
-                assertThat().statusCode(HTTP_STATUS_OK).
-                assertThat().body("response.items[1].last_name", equalTo(expectedLastName));
+                .then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("UsersMethodGetFollowersSchema.json"))
+                .assertThat().statusCode(HTTP_STATUS_OK)
+                .assertThat().body("response.items[1].last_name", equalTo(expectedLastName));
     }
 }

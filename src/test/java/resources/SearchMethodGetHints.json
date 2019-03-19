@@ -1,0 +1,31 @@
+{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "response": {
+    "count": {
+      "type": "number"
+    },
+    "items": {
+      "type": "array",
+      "properties": {
+        "type": "object",
+        "properties": {
+          "type": {
+            "type": "string"
+          },
+          "group": {
+            "type": "object",
+            "id": {
+              "type": "number"
+            },
+            "name": {
+              "type": "string"
+            }
+          }
+        },
+        "global": {
+          "type": "boolean"
+        }
+      }
+    }
+  }
+}
