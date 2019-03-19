@@ -4,9 +4,9 @@
     "type": "object",
     "count": {
       "type": "number"
-        },
-      "items": {
-          "type": "array",
+    },
+    "items": {
+      "type": "array",
       "properties": {
         "id": {
           "type": "number"
@@ -19,5 +19,6 @@
         }
       }
     }
+  }
 }
 
