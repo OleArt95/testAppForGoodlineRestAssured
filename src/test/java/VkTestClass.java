@@ -28,7 +28,7 @@ public class VkTestClass {
                 .setBaseUri(URL_API_VK_COM)
                 .setBasePath(BASE_PATH)
                 .setContentType(ContentType.JSON)
-                .addParam("access_token", "647e0a47b8fdbc94c2a9fd1cc557bd5e9b136eab04bfce2b5fc93456b526b0ecc9f9125c7a95f26414fff")
+                .addParam("access_token", "338a808601140cd516af6050686e59af1934a78f2ddb59e9d52fb99fa4188ad6a3c86ec036b710f5a95b5")
                 .addParam("v", API_VERSION)
                 .build();
 
@@ -73,14 +73,14 @@ public class VkTestClass {
     @Ignore
     @Test
     public void getInfoWithMethodSearchGetHints() {
-        given().
-                param("q", "Типичный Кемерово").
-                param("limit", 10).
-                param("search_global", 1).
-                when().
-                get(API_VK_SEARCH_GET_HINTS)
-                .then().
-                assertThat().statusCode(HTTP_STATUS_OK);
+            given().
+                    param("q", "Типичный Кемерово").
+                    param("limit", 10).
+                    param("search_global", 1).
+                    when()
+                    .get(API_VK_SEARCH_GET_HINTS)
+                    .then()
+                    .assertThat().statusCode(HTTP_STATUS_OK);
     }
 
     @Test
@@ -93,9 +93,11 @@ public class VkTestClass {
                 param("hometown", "Кемерово").
                 when().
                 get(API_VK_USERS_SEARCH)
-                .then().
-                assertThat().statusCode(HTTP_STATUS_OK).
-                assertThat().body("response.items[2].last_name", equalTo(expectedLastName));
+                .then()
+                .assertThat()
+                .body(matchesJsonSchemaInClasspath("UsersMethodGetWithFieldsSchema.json"))
+                .assertThat().statusCode(HTTP_STATUS_OK)
+                .assertThat().body("response.items[2].last_name", equalTo(expectedLastName));
     }
 
     @Test
